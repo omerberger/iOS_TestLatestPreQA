@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface ViewController : UIViewController
+#import "LIOLookIOManager.h"
+@interface ViewController : UIViewController <LIOLookIOManagerDelegate>
 
 
 @end

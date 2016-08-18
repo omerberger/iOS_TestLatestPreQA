@@ -7,7 +7,9 @@
 //
 
 #import "AppDelegate.h"
-
+#import "LIOLookIOManager.h"
+@import AVFoundation;
+@import Photos;
 @interface AppDelegate ()
 
 @end
@@ -16,7 +18,12 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+  
+    [self askForPhotosPermissons];
+    [self askForCameraPermissions];
+    
+    [self.window makeKeyAndVisible];
+    [[LIOLookIOManager sharedLookIOManager]performSetupWithDelegate:(id)self.window.rootViewController];
     return YES;
 }
 
@@ -42,4 +49,30 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+- (void)askForCameraPermissions{
+    [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
+        if (!granted) {
+            
+        }
+        
+    }];
+}
+
+- (void)askForPhotosPermissons{
+   
+    [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+        
+        
+    } completionHandler:^(BOOL success, NSError * _Nullable error) {
+        if (!success) {
+            
+        }
+        
+    }];
+
+}
+
+- (void)openDeviceSettings{
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+}
 @end
